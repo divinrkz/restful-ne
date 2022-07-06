@@ -15,10 +15,10 @@ const AUTH_MIDDLEWARE = async(req, res, next) => {
   
         const header = req.header('Authorization');
         if (!header) 
-            return res.status(404).send(APIResponse.fail(null, 'NO BEARER TOKEN FOUND')); 
+            return res.status(401).send(APIResponse.fail(null, 'NO BEARER TOKEN FOUND')); 
         
          if (!(header.startsWith('Bearer ')))  
-            return res.status(404).send(APIResponse.fail(null, 'INVALID BEARER TOKEN')); 
+            return res.status(401).send(APIResponse.fail(null, 'INVALID BEARER TOKEN')); 
             
         const token = header.split(' ')[1];  
         console.log(token);  
