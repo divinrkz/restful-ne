@@ -6,7 +6,6 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const { registerSchema } = require('swaggiffy');
 
-const SECRET_KEY = process.env.SECRET_KEY;
 
 const userSchema = mongoose.Schema({
     names: {
@@ -39,7 +38,7 @@ userSchema.methods.generateAuthToken = function () {
         email: this.email,
         names: this.names,
         userType: this.userType
-    }, SECRET_KEY);
+    }, process.env.JWT_SECRET);
 };
 
 
