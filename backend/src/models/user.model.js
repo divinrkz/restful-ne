@@ -6,7 +6,9 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const { registerSchema } = require('swaggiffy');
 
-
+/**
+ * User shcema
+ */
 const userSchema = mongoose.Schema({
     names: {
         type: String,
@@ -37,6 +39,10 @@ const userSchema = mongoose.Schema({
     }
 });
 userSchema.plugin(timestamps);
+/**
+ * generate Auth Token
+ * @returns token
+ */
 userSchema.methods.generateAuthToken = function () {
     return jwt.sign({
         _id: this._id,
@@ -47,9 +53,14 @@ userSchema.methods.generateAuthToken = function () {
     }, process.env.JWT_SECRET);
 };
 
-
+/**
+ * User Model
+ */
 const User = mongoose.model('User', userSchema);
 
+/**
+ * user dto
+ */
 const userDto = {
     names: '',
         email: '',
@@ -57,8 +68,16 @@ const userDto = {
         phoneNumber: '',
         password: ''
 }
+/**
+ * register swagger
+ */
 registerSchema('User', userDto);
 
+/**
+ * validate input
+ * @param {} data 
+ * @returns 
+ */
 const validate = (data) => {
     const schema = {
         names: Joi.string().required(),
@@ -72,14 +91,25 @@ const validate = (data) => {
 
 }
 
+/**
+ * auth dto
+ */
 
 const authDto = {
     email: '',
     password: ''
 }
 
+/**
+ * register schema
+ */
 registerSchema('AuthDto', authDto);
 
+/**
+ * validate login
+ * @param {*} data 
+ * @returns 
+ */
 const validateLogin = (data) => {
     const schema = {
         email: Joi.string().email().required(),

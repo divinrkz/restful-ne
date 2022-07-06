@@ -10,7 +10,7 @@ const login = async (req, res) => {
         ;
         if (error) return res.status(400).send(APIResponse.fail(error.details[0].message, 'VALIDATION ERROR')); 
 
-        const user = await User.findOne({username: req.body.username, isDeleted: false});
+        const user = await User.findOne({email: req.body.email, isDeleted: false});
         if (!user) return res.status(400).send(APIResponse.fail(null, 'Invalid Credentials')); 
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);

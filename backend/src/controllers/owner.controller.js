@@ -27,6 +27,15 @@ const create = async (req, res) => {
         const {error} = validate(req.body);
         if (error) return res.status(400).send(APIResponse.fail(error.details[0].message, 'VALIDATION ERROR')); 
 
+        let existing;
+        existing =  await Owner.findOne({nationalId: req.body.nationalId})
+       if (existing)  return res.status(400).send(APIResponse.fail('Owner with National ID already exists')); 
+
+
+       existing =  await Owner.findOne({phoneNumber: req.body.phoneNumber})
+       if (existing)  return res.status(400).send(APIResponse.fail('Owner with Phone Number already exists')); 
+
+
         const owner = new Owner(req.body);
 
         const saved = await owner.save();

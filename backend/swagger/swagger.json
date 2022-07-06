@@ -900,6 +900,9 @@
           "company": {
             "type": "string"
           },
+          "chasisNumber": {
+            "type": "string"
+          },
           "year": {
             "type": "number"
           },

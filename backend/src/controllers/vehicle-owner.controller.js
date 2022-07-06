@@ -2,6 +2,7 @@ const {VehicleOwner, validate} = require('../models/vehicle-owner.model');
 const { APIResponse } = require('../config/APIResponse.config');
 const { Vehicle } = require('../models/vehicle.model');
 const { Owner } = require('../models/owner.model');
+const {generatePlateNumber} = require('../utils/common.util');
 
 const getAll = async (req, res) => {
     try {
@@ -35,9 +36,17 @@ const create = async (req, res) => {
         const owner = Owner.findById(req.body.ownerId);
         if (!owner) return res.status(404).send(APIResponse.fail(null, 'Owner not found'));
 
-        const plateNumber = '324534';
+        let found;
+        let plateNumber;
+        while(!found) {
+            plateNumber = generatePlateNumber();
+            found = await VehicleOwner.findOne({plateNumber});
+            if (!found) break; 
+        }
+
+        console.log(plateNumber);
         const vehicleOwner = new VehicleOwner({
-            vehicle, owner, plateNumber
+            vehicle: vehicle._id, owner: owner._id, plateNumber
         });
 
         const saved = await vehicleOwner.save();

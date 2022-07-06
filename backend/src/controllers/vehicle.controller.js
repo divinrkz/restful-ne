@@ -28,6 +28,10 @@ const create = async (req, res) => {
         const {error} = validate(req.body);
         if (error) return res.status(400).send(APIResponse.fail(error.details[0].message, 'VALIDATION ERROR')); 
 
+        let existing;
+        existing =  await Vehicle.findOne({chasisNumber: req.body.chasisNumber})
+       if (existing)  return res.status(400).send(APIResponse.fail('Vehicle with Chasis already exists')); 
+
         const vehicle = new Vehicle(req.body);
 
         const saved = await vehicle.save();
