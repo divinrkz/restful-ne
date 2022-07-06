@@ -1,19 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, Form } from '../';
+import {Alert, Form } from '..';
 import { API_URL, post } from '../../utils/common.util';
 
 
-export default function CreateVehicleModal() {
+export default function CreateOwnerModal() {
     const [response, setResponse] = useState(null);
     const [alert, setAlert] = useState(false);
     const [results, setResults] = useState(null);
 
-
-    const createVehicle = async () => {
+    const createOwner = async () => {
         setResults(null);
         try {
             
-            let res = await fetch(API_URL + '/vehicles', post(form));
+            let res = await fetch(API_URL + '/owners', post(form));
             let data = await res.json();
 
             if (!data.success) {
@@ -21,14 +20,13 @@ export default function CreateVehicleModal() {
                 setResponse({ success: false, message: `${data?.message}: ${data?.error} `});
             } else {
                 setAlert(true);
-                setResponse( {success: true, message: 'Vehicle created successfully'});
+                setResponse( {success: true, message: 'Owner created successfully'});
                 setForm({
-                        modelName: '',
-                        chasisNumber: '',
-                        company: '',
-                        year: '',
-                        price: ''}
-                        )
+                    names: '',
+                    nationalId: '',
+                    phoneNumber: '',
+                    address: ''
+                })
             }
         } catch(e) {
            setAlert(true);
@@ -36,11 +34,10 @@ export default function CreateVehicleModal() {
         }
     }
     const [form, setForm] = useState({
-        modelName: '',
-        chasisNumber: '',
-        company: '',
-        year: '',
-        price: ''
+        names: '',
+        nationalId: '',
+        phoneNumber: '',
+        address: ''
     });
 
     const closeAlert = () => {
@@ -69,7 +66,7 @@ export default function CreateVehicleModal() {
 
                         <div className="p-12">
                        {alert ? <Alert success={response?.success} handleClose={closeAlert} message={`${response?.message}`}/> : null}
-                             <Form page={'create-vehicle'} handleSubmit={createVehicle} formState={form} setFormState={setForm}/>
+                             <Form page={'create-owner'} handleSubmit={createOwner} formState={form} setFormState={setForm}/>
                        </div>
                     </div>
                 </div>

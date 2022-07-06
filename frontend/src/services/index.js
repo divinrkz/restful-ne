@@ -13,13 +13,15 @@ export function getToken() {
 
 export function isLoggedIn() {
   const token = getToken();
+
   if (token) {
    try {
     const decode = jwt(token);
-    console.log(decode)
+    return true;
    } catch (error) {
+    console.log(error)
     return false;
    }
-  }
-  return true;
+  } 
+  return false;
 }

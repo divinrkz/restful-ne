@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Alert, Form } from '../components';
 import {API_URL, post} from '../utils/common.util'
 import {useNavigate} from 'react-router-dom';
+import { setToken } from '../services';
 
 export function LoginPage() {
     const [response, setResponse] = useState(null);
@@ -21,7 +22,8 @@ export function LoginPage() {
                 setAlert(true);
                 setResponse( `${data?.message}`);
             } else {
-                authenticate(data.token);
+                authenticate(data.data.token);
+                console.log('ngavigae')
                 navigate('/vehicles')
 
             }
@@ -38,7 +40,7 @@ export function LoginPage() {
 
 
     const authenticate = (token) => {
-        localStorage.setItem('token', JSON.stringify(token));
+        setToken(token)
     }
     const closeAlert = () => {
         setAlert(false);

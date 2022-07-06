@@ -8,3 +8,12 @@ export const post = (data) => {
         body: JSON.stringify(data)
     }
 }
+
+export const get = () => {
+    return {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+}

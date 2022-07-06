@@ -5,19 +5,12 @@ import {
   } from "react-router-dom";
 
   import {AuthGuard} from './guards/AuthGuard';
-import {VehiclesPage, LoginPage, RegisterPage, NotFoundPage} from './pages'
+import {VehiclesPage, OwnersPage, LoginPage, RegisterPage, NotFoundPage} from './pages'
 import {isLoggedIn} from './services'
+import Layout from './pages/Layout';
 
 function App() {
-	const [loggedIn, setIsLoggedIn] = React.useState(false);
-	
-	React.useEffect(() => {
-		if (isLoggedIn()) {
-			setIsLoggedIn(true);
-		}
-		setIsLoggedIn(false);
-	}, [])
-	
+
 
 	return (
 		<React.Fragment>
@@ -29,12 +22,16 @@ function App() {
 				<Route path="/register"  exact element={<RegisterPage />}/>
 				<Route path="/vehicles" exact 
 				 element={
-					<AuthGuard isLoggedIn={loggedIn}>
-						<VehiclesPage />
+					<AuthGuard isLoggedIn={isLoggedIn()}>
+						<Layout> <VehiclesPage/> </Layout>
 					</AuthGuard>
-					}/>
-				<Route path="/owners"  exact element={<VehiclesPage />}/>
-				<Route path="/vehicle-owners"  exact element={<VehiclesPage />}/>
+				}/>
+				<Route path="/owners" exact 
+				 element={
+					<AuthGuard isLoggedIn={isLoggedIn()}>
+						<Layout> <OwnersPage/> </Layout>
+					</AuthGuard>
+				}/>
 			</Routes>
 		</React.Fragment>	
 	);
