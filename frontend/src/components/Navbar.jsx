@@ -1,14 +1,26 @@
 import React, {useState, useEffect} from 'react';
 
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
+import { isLoggedIn, removeToken } from '../services';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
     const [state, setState] = useState({page: 1});
+    const navigate = useNavigate()
+    const [user, setUser] = useState(null)
 
    const handleChange = page => {
         setState({ page });
     }
+
+    useEffect(() => {
+        setUser(isLoggedIn())
+    }, [])
     
+    const logout = () => {
+        removeToken()
+        navigate('/login')
+    }
     
     return (
             <React.Fragment>
@@ -22,15 +34,16 @@ export const Navbar = () => {
                     </div>
                     {/* Collapsible wrapper */}
                     {/* Right elements */}
-                    {/* <div className="flex items-center relative">
-                        <Link to="/">
-                            <span className={'px-9 active'} onClick={() => handleChange(1)}>Purchaser</span>
-                        </Link>
-                        <Link to="/check">
-                            <span  className={''} onClick={() => handleChange(2)}>Checker</span>
-                        </Link>
-                    </div> */}
-                    {/* Right elements */}
+                    <div className="flex items-center relative">
+                        {user ? 
+                        <div className='flex'>   
+                        <img className='mr-4' src={`https://ui-avatars.com/api/?name=${user.names}&rounded=true`} style={{width:'23px', height: '23px'}}></img>
+                        <img src={'/images/power-white.svg'} onClick={logout} className='cursor-pointer' style={{width:'23px', height: '23px'}} />
+                        </div>
+                     : null}
+                        
+                    </div>
+
                     </div>
                 </nav>
                     

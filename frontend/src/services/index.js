@@ -17,11 +17,15 @@ export function isLoggedIn() {
   if (token) {
    try {
     const decode = jwt(token);
-    return true;
+    return decode;
    } catch (error) {
     console.log(error)
     return false;
    }
   } 
   return false;
+}
+
+export function removeToken() {
+  localStorage.removeItem('token');
 }

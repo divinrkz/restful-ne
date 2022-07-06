@@ -23,8 +23,7 @@ export function LoginPage() {
                 setResponse( `${data?.message}`);
             } else {
                 authenticate(data.data.token);
-                console.log('ngavigae')
-                navigate('/vehicles')
+                window.location.href = ('/vehicles')
 
             }
         } catch(e) {
