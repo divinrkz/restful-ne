@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { registerDefinition } = require('swaggiffy');
 const controllers = require('../controllers/user.controller');
 
 
@@ -11,5 +12,7 @@ router.post('/' , controllers.create);
 router.put('/:id', controllers.update);
 
 router.delete('/:id', controllers.deleter);
+
+registerDefinition(router, {tags: 'Users', mappedSchema: 'User', basePath: '/api/users'});
 
 exports.UserRoute = router;

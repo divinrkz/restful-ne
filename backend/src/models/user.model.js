@@ -4,6 +4,7 @@ const { EUserType } = require('./enums');
 const { getEnum } = require('../utils/common.util.js');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
+const { registerSchema } = require('swaggiffy');
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -44,6 +45,7 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model('User', userSchema);
 
+registerSchema('User', userSchema, {orm: 'mongoose'})
 
 const validate = (data) => {
     const schema = {
