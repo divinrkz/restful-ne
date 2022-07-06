@@ -82,8 +82,8 @@ const validate = (data) => {
     const schema = {
         names: Joi.string().required(),
         email: Joi.string().email().required(),
-        nationalId: Joi.string().min(16).max(16).required(),
-        phoneNumber: Joi.string().min(10).max(10).required(),
+        nationalId: Joi.string().regex(/^\d{16}$/).required(),
+        phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
         password: Joi.string().min(5).required()
     }
 

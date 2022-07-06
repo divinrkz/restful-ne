@@ -1,6 +1,12 @@
 const {Owner, validate, validateUpdate} = require('../models/owner.model');
 const { APIResponse } = require('../config/APIResponse.config');
 
+/**
+ * Get all owners
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getAll = async (req, res) => {
     try {
         const owners = await Owner.find();
@@ -10,6 +16,12 @@ const getAll = async (req, res) => {
     } 
 };
 
+/**
+ * Get owner by Id
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getById = async (req, res) => {
     try {
         const owner = await Owner.findById(req.params.id);
@@ -22,6 +34,12 @@ const getById = async (req, res) => {
 };
 
 
+/**
+ * Create owners
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const create = async (req, res) => {
     try {
         const {error} = validate(req.body);
@@ -48,7 +66,12 @@ const create = async (req, res) => {
 };
 
 
-
+/**
+ * Deleter owner by Id
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const deleter = async (req, res) => {
     try {
         const owner = await Owner.findById(req.params.id);

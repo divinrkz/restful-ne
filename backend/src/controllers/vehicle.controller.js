@@ -2,6 +2,12 @@ const {Vehicle, validate, validateUpdate} = require('../models/vehicle.model');
 const { hashPassword } = require('../utils/common.util');
 const { APIResponse } = require('../config/APIResponse.config');
 
+/**
+ * Get all vehicle owner
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getAll = async (req, res) => {
     try {
         const vehicles = await Vehicle.find();
@@ -11,6 +17,12 @@ const getAll = async (req, res) => {
     } 
 };
 
+/**
+ * Get by Id
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getById = async (req, res) => {
     try {
         const vehicle = await Vehicle.findById(req.params.id);

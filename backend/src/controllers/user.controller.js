@@ -54,7 +54,6 @@ const create = async (req, res) => {
         existing =  await User.findOne({email: req.body.email})
         if (existing)  return res.status(400).send(APIResponse.fail('User with Email already exists')); 
 
-
         existing =  await User.findOne({phoneNumber: req.body.phoneNumber})
         if (existing)  return res.status(400).send(APIResponse.fail('User with Phone Number already exists')); 
 

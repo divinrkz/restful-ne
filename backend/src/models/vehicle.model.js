@@ -4,7 +4,9 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const { registerSchema } = require('swaggiffy');
 
-
+/**
+ * Vehicle schema
+ */
 const vehicleSchema = mongoose.Schema({
     modelName: {
         type: String,
@@ -34,18 +36,26 @@ const vehicleSchema = mongoose.Schema({
 });
 vehicleSchema.plugin(timestamps);
 
-
+// Vehicle model
 const Vehicle = mongoose.model('Vehicle', vehicleSchema);
 
+/**
+ * Vehicle dto
+ */
 const vehicleDto = {
     modelName: '',
     company: '',
     chasisNumber: '',
     year: 0,
-    price: 0
+    price: ''
 }
 registerSchema('Vehicle', vehicleDto);
 
+/**
+ * validate model
+ * @param {*} data 
+ * @returns 
+ */
 const validate = (data) => {
     const schema = {
         modelName: Joi.string().required(),

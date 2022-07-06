@@ -3,7 +3,12 @@ const { APIResponse } = require('../config/APIResponse.config');
 const bcrypt = require('bcryptjs');
 
 
-
+/**
+ * Login method
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const login = async (req, res) => {
     try {
         const {error} = validateLogin(req.body)
@@ -28,6 +33,12 @@ const login = async (req, res) => {
     } 
 };
 
+/**
+ * Get authenticated users 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getCurrentUser = async (req, res) => {
     try {
         const user = await User.findById(req.AUTH_USER._id);

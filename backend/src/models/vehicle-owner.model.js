@@ -5,10 +5,13 @@ const jwt = require('jsonwebtoken');
 const { registerSchema } = require('swaggiffy');
 Joi.objectId = require("joi-objectid")(Joi);
 
+/**
+ * vehicle Owner schema
+ */
 const vehicleOwnerSchema = mongoose.Schema({
     vehicle: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'VehicleOwner',
+        ref: 'Vehicle',
         required: true
     },
     owner: {
@@ -28,15 +31,29 @@ const vehicleOwnerSchema = mongoose.Schema({
 });
 vehicleOwnerSchema.plugin(timestamps);
 
-
+/**
+ * Vehicle Owner
+ */
 const VehicleOwner = mongoose.model('VehicleOwner', vehicleOwnerSchema);
 
+/**
+ * Vehicle owner dtop
+ * 
+ */
 const vehicleOwnerDto = {
     vehicleId: '',
     ownerId: '',
 }
+/**
+ * register swagger model
+ */
 registerSchema('VehicleOwner', vehicleOwnerDto);
 
+/**
+ * validate model
+ * @param {} data 
+ * @returns 
+ */
 const validate = (data) => {
     const schema = {
         vehicleId: Joi.objectId().required(),

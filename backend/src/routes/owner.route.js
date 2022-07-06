@@ -1,3 +1,7 @@
+/**
+ * Owners router
+ */
+
 const router = require('express').Router();
 const { registerDefinition } = require('swaggiffy');
 const controllers = require('../controllers/owner.controller');

@@ -3,6 +3,14 @@ const { User } = require('../models/user.model');
 const { APIResponse } = require('../config/APIResponse.config');
 
 const SECRET_KEY = process.env.JWT_SECRET;
+
+/**
+ * Authentication Middleware
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 const AUTH_MIDDLEWARE = async(req, res, next) => {
   
         const header = req.header('Authorization');

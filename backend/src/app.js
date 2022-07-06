@@ -12,6 +12,7 @@ const {AuthRoute} = require('./routes/auth.route');
 const {VehicleRoute} = require('./routes/vehicle.route');
 const {OwnerRoute} = require('./routes/owner.route');
 const {VehicleOwnerRoute} = require('./routes/vehicle-owner.route');
+const {AUTH_MIDDLEWARE} = require('./middlewares/auth.middleware')
 
 const PORT = process.env.PORT;
 
@@ -19,12 +20,39 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 app.use(cors());
 
-app.use('/api/users',  UserRoute);
-app.use('/api/auth',  AuthRoute);
-app.use('/api/vehicles',  VehicleRoute);
-app.use('/api/owners',  OwnerRoute);
-app.use('/api/vehicle-owners', VehicleOwnerRoute);
+/**
+ *  User Router
+ */
+app.use('/api/users', [AUTH_MIDDLEWARE], UserRoute);
 
+/**
+ * Auth Router
+ */
+app.use('/api/auth',   AuthRoute);
+
+/**
+ * Vehicle router
+ */
+app.use('/api/vehicles', [AUTH_MIDDLEWARE], VehicleRoute);
+
+/**
+ * Onwners router
+ */
+app.use('/api/owners',  [AUTH_MIDDLEWARE], OwnerRoute);
+
+/**
+ * Vehicle Router
+ */
+app.use('/api/vehicle-owners', [AUTH_MIDDLEWARE], VehicleOwnerRoute);
+
+
+/**
+ * Setup swaggiffy
+ */
 new Swaggiffy().setupExpress(app).swaggiffy();
 
+
+/**
+ * Run server on PORT
+ */
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
