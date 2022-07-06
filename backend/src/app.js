@@ -8,6 +8,7 @@ const cors = require('cors');
 const bodyparser = require('body-parser');
 const { Swaggiffy } = require('swaggiffy')
 const {UserRoute} = require('./routes/users.route');
+const {AuthRoute} = require('./routes/auth.route');
 
 const PORT = process.env.PORT;
 
@@ -16,6 +17,7 @@ app.use(bodyparser.json());
 app.use(cors());
 
 app.use('/api/users',  UserRoute);
+app.use('/api/auth',  AuthRoute);
 
 new Swaggiffy().setupExpress(app).swaggiffy();
 

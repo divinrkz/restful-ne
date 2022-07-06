@@ -17,9 +17,14 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    userType: {
+    phoneNumber: {
         type: String,
-        enum: getEnum(EUserType),
+        unique: true,
+        required: true
+    },
+    nationalId: {
+        type: String,
+        unique: true,
         required: true
     },
     password: {
@@ -37,19 +42,29 @@ userSchema.methods.generateAuthToken = function () {
         _id: this._id,
         email: this.email,
         names: this.names,
-        userType: this.userType
+        phoneNumber: this.phoneNumber,
+        nationalId: this.nationalI
     }, process.env.JWT_SECRET);
 };
 
 
 const User = mongoose.model('User', userSchema);
 
-registerSchema('User', userSchema, {orm: 'mongoose'})
+const userDto = {
+    names: '',
+        email: '',
+        nationalId: '',
+        phoneNumber: '',
+        password: ''
+}
+registerSchema('User', userDto);
 
 const validate = (data) => {
     const schema = {
         names: Joi.string().required(),
         email: Joi.string().email().required(),
+        nationalId: Joi.string().min(16).max(16).required(),
+        phoneNumber: Joi.string().min(10).max(10).required(),
         password: Joi.string().min(5).required()
     }
 
@@ -58,15 +73,12 @@ const validate = (data) => {
 }
 
 
-const validateUpdate = (data) => {
-    const schema = {
-        names: Joi.string().required(),
-        email: Joi.string().email().required(),
-    }
-
-    return Joi.validate(data, schema);
-
+const authDto = {
+    email: '',
+    password: ''
 }
+
+registerSchema('AuthDto', authDto);
 
 const validateLogin = (data) => {
     const schema = {
@@ -82,6 +94,5 @@ const validateLogin = (data) => {
 module.exports = {
     User,
     validate,
-    validateLogin,
-    validateUpdate
+    validateLogin
 }

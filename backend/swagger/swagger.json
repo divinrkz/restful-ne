@@ -168,53 +168,6 @@
             }
           ]
         },
-        "put": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "",
-          "description": "",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "required": false,
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "201": {
-              "description": "Created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          },
-          "security": [
-            {
-              "Bearer": [
-                "global"
-              ]
-            }
-          ]
-        },
         "delete": {
           "tags": [
             "Users"
@@ -260,6 +213,95 @@
             }
           ]
         }
+      },
+      "/api/auth/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/AuthDto"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/AuthDto"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
+      },
+      "/api/auth/get-current": {
+        "get": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/AuthDto"
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
       }
     },
     "definitions": {
@@ -267,41 +309,30 @@
         "type": "object",
         "properties": {
           "names": {
-            "type": "string",
-            "example": "string"
+            "type": "string"
           },
           "email": {
-            "type": "string",
-            "example": "string"
+            "type": "string"
           },
-          "userType": {
-            "type": "string",
-            "example": "string"
+          "nationalId": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "example": "string"
+            "type": "string"
+          }
+        }
+      },
+      "AuthDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
           },
-          "isDeleted": {
-            "type": "boolean",
-            "example": false
-          },
-          "_id": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011",
-            "required": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "7/6/2022, 8:05:58 AM"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "7/6/2022, 8:05:58 AM"
-          },
-          "__v": {
-            "type": "number",
-            "example": 0
+          "password": {
+            "type": "string"
           }
         }
       }

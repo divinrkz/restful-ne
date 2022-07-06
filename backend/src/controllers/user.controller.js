@@ -45,34 +45,13 @@ const create = async (req, res) => {
 };
 
 
-const update = async (req, res) => {
-    try {
-        const {error} = validateUpdate(req.body);
-        if (error) return res.status(400).send(APIResponse.fail(error.details[0].message, 'VALIDATION ERROR')); 
-
-
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).send(APIResponse.fail(null, 'NOT FOUND'));  
-
-        user.names = req.body.names;
-        user.username = req.body.username;
-        user.nationalId = req.body.nationalId;
-
-        const updated = await user.save();
-
-        return res.status(200).send(APIResponse.success(updated));
-    } catch (err) {
-        return res.status(500).send(APIResponse.fail(err.toString()));
-    } 
-};
-
 
 const deleter = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).send(APIResponse.fail(null, 'NOT FOUND'));  
 
-        const deleted = await User.findByIdAndDelete(user._id);
+        const deleted = await User.findByIdAndUpdate(user._id, {isDeleted: true}, {new: true});
 
         return res.status(200).send(SUCCESS_RESPONSE(null, 'Deleted Successfully'));
     } catch (err) {
@@ -84,5 +63,5 @@ const deleter = async (req, res) => {
 
 
 module.exports = {
-    getAll, getById, create, update, deleter
+    getAll, getById, create, deleter
 }

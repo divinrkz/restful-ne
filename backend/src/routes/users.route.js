@@ -9,8 +9,6 @@ router.get('/:id',  controllers.getById);
 
 router.post('/' , controllers.create);
 
-router.put('/:id', controllers.update);
-
 router.delete('/:id', controllers.deleter);
 
 registerDefinition(router, {tags: 'Users', mappedSchema: 'User', basePath: '/api/users'});
