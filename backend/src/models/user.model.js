@@ -49,7 +49,7 @@ userSchema.methods.generateAuthToken = function () {
         email: this.email,
         names: this.names,
         phoneNumber: this.phoneNumber,
-        nationalId: this.nationalI
+        nationalId: this.nationalId
     }, process.env.JWT_SECRET);
 };
 

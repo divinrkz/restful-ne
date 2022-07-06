@@ -23,12 +23,12 @@ app.use(cors());
 /**
  *  User Router
  */
-app.use('/api/users', [AUTH_MIDDLEWARE], UserRoute);
+app.use('/api/users', UserRoute);
 
 /**
  * Auth Router
  */
-app.use('/api/auth',   AuthRoute);
+app.use('/api/auth',  AuthRoute);
 
 /**
  * Vehicle router

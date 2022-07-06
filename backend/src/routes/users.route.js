@@ -5,15 +5,16 @@
 const router = require('express').Router();
 const { registerDefinition } = require('swaggiffy');
 const controllers = require('../controllers/user.controller');
+const { AUTH_MIDDLEWARE } = require('../middlewares/auth.middleware');
 
 
-router.get('/',  controllers.getAll);
+router.get('/',  [AUTH_MIDDLEWARE], controllers.getAll);
 
-router.get('/:id',  controllers.getById);
+router.get('/:id', [AUTH_MIDDLEWARE], controllers.getById);
 
 router.post('/' , controllers.create);
 
-router.delete('/:id', controllers.deleter);
+router.delete('/:id', [AUTH_MIDDLEWARE], controllers.deleter);
 
 registerDefinition(router, {tags: 'Users', mappedSchema: 'User', basePath: '/api/users'});
 
