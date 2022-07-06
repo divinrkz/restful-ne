@@ -5,13 +5,11 @@ import {
   } from "react-router-dom";
 
   import {AuthGuard} from './guards/AuthGuard';
-import {VehiclesPage, OwnersPage, LoginPage, RegisterPage, NotFoundPage} from './pages'
+import {VehiclesPage, OwnersPage, LoginPage, RegisterPage, NotFoundPage, VehicleOwnersPage} from './pages'
 import {isLoggedIn} from './services'
 import Layout from './pages/Layout';
 
 function App() {
-
-
 	return (
 		<React.Fragment>
 		
@@ -30,6 +28,12 @@ function App() {
 				 element={
 					<AuthGuard isLoggedIn={isLoggedIn()}>
 						<Layout> <OwnersPage/> </Layout>
+					</AuthGuard>
+				}/>
+				<Route path="/vehicle-owners" exact 
+				 element={
+					<AuthGuard isLoggedIn={isLoggedIn()}>
+						<Layout> <VehicleOwnersPage/> </Layout>
 					</AuthGuard>
 				}/>
 			</Routes>

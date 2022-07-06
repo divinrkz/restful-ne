@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest",
+    "run:server": "git pull origin main",
     "build": "vite build",
     "serve": "vite preview"
   },

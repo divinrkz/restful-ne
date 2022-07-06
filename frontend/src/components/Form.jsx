@@ -2,12 +2,13 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
+export const Form = ({page=1, handleSubmit, formState, setFormState, vehicles=[], owners=[]}) => {
+
 
 
    const handleChange = (e) => {
         var name = e.target.name;
-
+    console.log(name, e.target.value);
         setFormState({...formState, [name]: e.target.value});
     }
     
@@ -85,7 +86,7 @@ export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
                             </div>
                                <div className='flex'>
                                    <React.Fragment>
-                                       <div className="mb-6 mr-6">
+                                       <div className="mb-6 mr-6 flex-1">
                                            <label htmlFor="chasisNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Chasis Number</label>
                                            <input type="text" id="chasisNumber" name="chasisNumber"  value={formState.chasisNumber} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-42 focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Chasis" required=""/>
                                        </div>
@@ -100,7 +101,7 @@ export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
                                
                                <div className='flex'>
                                    <React.Fragment>
-                                       <div className="mb-6 mr-6">
+                                       <div className="mb-6 mr-6 flex-1">
                                            <label htmlFor="company" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Manufacture Company</label>
                                            <input type="text" id="company" name="company"  value={formState.company} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-42 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Company" required=""/>
                                        </div>
@@ -120,9 +121,9 @@ export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
 
                           <div className='flex'>
                               <React.Fragment>
-                                  <div className="mb-6 mr-6">
+                                  <div className="mb-6 mr-6 flex-1">
                                       <label htmlFor="names" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Names</label>
-                                      <input type="text" id="names" name="names"  value={formState.names} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-42 focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Names" required=""/>
+                                      <input type="text" id="names" name="names"  value={formState.names} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Names" required=""/>
                                   </div>
                               </React.Fragment>
                               <React.Fragment>
@@ -135,7 +136,7 @@ export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
                           
                           <div className='flex'>
                               <React.Fragment>
-                                  <div className="mb-6 mr-6">
+                                  <div className="mb-6 mr-6 flex-1">
                                       <label htmlFor="nationalId" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 dark:text-gray-300">National Id</label>
                                       <input type="text" id="nationalId" name="nationalId"  value={formState.nationalId} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-42 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="National Id" required=""/>
                                   </div>
@@ -150,6 +151,41 @@ export const Form = ({page=1, handleSubmit, formState, setFormState}) => {
                           
                       <button type="button" onClick={handleSubmit} style={{width: '32rem'}} className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-md text-sm  mt-8 px-8 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700  text-sm uppercase font-bold">Create Owner</button>
                   </div> 
+                   : page == 'create-record' ? 
+                   <div>
+
+                      <div className='flex'>
+                          <React.Fragment>
+                              <div className="mb-6 mr-6 flex-1">
+                              <label for="vehicles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Choose a Vehicle</label>
+                                <select id="vehicles" name={'vehicleId'} value={formState.vehicleId} onChange={handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">Vehicles</option>
+                                {vehicles.map(vehicle => (
+                                    <option value={vehicle._id}>{vehicle.modelName} {vehicle.chasisNumber} {vehicle.year} </option>
+                                ))}
+                                </select>
+                              </div>
+                          </React.Fragment>
+                      </div>
+
+                      <div className='flex'>
+                          <React.Fragment>
+                              <div className="mb-6 mr-6 flex-1">
+                              <label for="owners" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Choose an Owner</label>
+                                <select id="owners" value={formState.ownerId} onChange={handleChange} name={'ownerId'} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">Owners</option>
+                               
+                                {owners.map(owner => (
+                                    <option value={owner._id}>{owner.names} #{owner.nationalId} </option>
+                                ))}
+                                </select>
+                              </div>
+                          </React.Fragment>
+                      </div>
+
+                      
+                  <button type="button" onClick={handleSubmit} style={{width: '32rem'}} className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-md text-sm  mt-8 px-8 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700  text-sm uppercase font-bold">Create Vehicle Owner</button>
+              </div> 
                             : null
 
 

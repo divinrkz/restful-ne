@@ -5,24 +5,28 @@ import CreateVehicleModal from '../components/modals/CreateVehicleModal';
 import {API_URL, get} from '../utils/common.util'
 
 
-export function VehiclesPage() {
+export function VehicleOwnersPage() {
     const [response, setResponse] = useState(null);
     const [alert, setAlert] = useState(false);
+    const [vehicleOwners, setVehicleOwners] = useState([])
     const [vehicles, setVehicles] = useState([])
+    const [owners, setOwners] = useState([])
 
-    const getVehicles = async () => {
+    const getVehicleOwners = async () => {
         try {
-            let res = await fetch(API_URL + '/vehicles', get());
+            let res = await fetch(API_URL + '/vehicle-owners', get());
             let data = await res.json();
-            setVehicles(data.data)
+            setVehicleOwners(data.data)
             
         } catch(e) {
             console.log(e);
         }
     }
+
+
     const [form, setForm] = useState({
-        meterNumber: '',
-        amount: ''
+        vehicleId: '',
+        ownerId: ''
     });
 
 
@@ -33,7 +37,8 @@ export function VehiclesPage() {
 
     useEffect(() => {
         // setAlert(true);
-        getVehicles();
+        getVehicleOwners();
+
     }, [])
 
     return (
@@ -46,8 +51,8 @@ export function VehiclesPage() {
                 {alert ? <Alert success={response?.success} handleClose={closeAlert} message={`${response?.message}`}/> : null}
                         <div className='mx-6'>
                             <div className='mb-5 flex justify-end'>
-                            <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="createVehiclesModal">
-                                Create Vehicle
+                            <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="assignOwnersModal">
+                                Create VehicleOwner
                                 </button>
                             </div>
                          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -58,27 +63,22 @@ export function VehiclesPage() {
                                            #
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Chasis Number
+                                            Plate Number
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Model Name
+                                            Vehicle 
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Manufacture Company
+                                            Owner
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Manufacture Year
+                                            Created At
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Price
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <span class="sr-only">Assign</span>
-                                        </th>
+    
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   { vehicles.map((vehicle, i) => 
+                                   { vehicleOwners.map((vehicle, i) => 
                                    (
                                     <tr class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
                                            <td class="px-6 py-4">
@@ -86,23 +86,18 @@ export function VehiclesPage() {
                                         </td>
 
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                            {vehicle.chasisNumber}
+                                            {vehicle.plateNumber}
                                         </th>
                                         <td class="px-6 py-4">
-                                        {vehicle.modelName}
+                                         {vehicle.vehicle.modelName} {vehicle.vehicle.chasisNumber} {vehicle.vehicle.year} 
                                         </td>
                                         <td class="px-6 py-4">
-                                        {vehicle.company}
+                                            {vehicle.owner.names}, # {vehicle.owner.nationalId} 
                                         </td>
                                         <td class="px-6 py-4">
-                                        {vehicle.year}
+                                            {`${new Date(vehicle.createdAt).toDateString()} ${new Date(vehicle.createdAt).toLocaleTimeString()}`}
                                         </td>
-                                        <td class="px-6 py-4">
-                                            {vehicle.price} 
-                                        </td>
-                                        <td class="px-6 py-4 text-right">
-                                            <button type="button" data-modal-toggle="assignOwnersModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Assign Owner</button>
-                                        </td>
+                             
                                     </tr>
                                    ))
                             }
@@ -117,14 +112,9 @@ export function VehiclesPage() {
 
 
 
-            {/* {modales} */}
-            <div id="createVehiclesModal"  aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <CreateVehicleModal />
-            </div>
-
-            {/* <div id="assignOwnersModal" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+            <div id="assignOwnersModal" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                 <AssignOwnerModal />
-            </div> */}
+            </div>
         </React.Fragment>
     )
 }

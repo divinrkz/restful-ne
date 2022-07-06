@@ -14,7 +14,7 @@ export const Tabber = () => {
                     <Link to="/owners"> <span href="#" className={"inline-block p-4 rounded-t-md hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300 " + ((location.pathname == '/owners') ? 'bg-gray-100 dark:text-blue-100': '') }>Owners</span></Link>
                 </li>
                 <li className="mr-2">
-                  <Link to="/vehicle-owners"> <span href="#" className={"inline-block p-4 rounded-t-md hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300 " + + ((location.pathname == '/vehicle-owners') ? 'bg-gray-100 dark:text-blue-100': '')}>Vehicle Owners</span></Link>
+                  <Link to="/vehicle-owners"> <span href="#" className={"inline-block p-4 rounded-t-md hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300 " +  ((location.pathname == '/vehicle-owners') ? 'bg-gray-100 dark:text-blue-100': '')}>Vehicle Owners</span></Link>
                 </li>
             </ul>
         </React.Fragment>
