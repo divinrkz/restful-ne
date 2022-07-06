@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Alert, Form, Tabber } from '../components';
 import CreateVehicleModal from '../components/modals/CreateVehicleModal';
-import {purchaseToken} from '../services';
+
 
 export function VehiclesPage() {
     const [response, setResponse] = useState(null);

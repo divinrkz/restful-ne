@@ -1,40 +1,25 @@
-import axios from 'axios';
 
-const ENDPOINT = import.meta.env.VITE_ENDPOINT_URL + '/api';
+import jwt from "jwt-decode";
 
-const getTokens = () => {
-  const url = `${ENDPOINT}/tokens`;
-  return axios.get(url)
-    .then(res => {
-      return res.data
-    }).catch((err) => {
-      console.log(err);
-      return err
-    })
-};
-
-
-const purchaseToken = (data) => {
-  return axios.post(`${ENDPOINT}/tokens/purchase`, data)
-    .then(res => {  
-      return res.data;
-    }).catch((err) => {
-      return err.response.data
-    })
+export function setToken(userToken) {
+  localStorage.setItem('token', JSON.stringify(userToken));
 }
 
-const checkToken = (token) => {
-  return axios.get(`${ENDPOINT}/tokens/by-token/${token}`)
-    .then(res => {  
-      return res.data;
-    }).catch((err) => {
-      return err.response.data
-    })
+export function getToken() {
+  const tokenString = localStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken;
 }
 
-
-export {
-  getTokens,
-  purchaseToken,
-  checkToken
-};
+export function isLoggedIn() {
+  const token = getToken();
+  if (token) {
+   try {
+    const decode = jwt(token);
+    console.log(decode)
+   } catch (error) {
+    return false;
+   }
+  }
+  return true;
+}

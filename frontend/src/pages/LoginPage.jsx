@@ -9,6 +9,7 @@ export function LoginPage() {
     const [results, setResults] = useState(null);
     const navigate = useNavigate()
 
+
     const login = async () => {
         setResults(null);
         try {
@@ -20,7 +21,9 @@ export function LoginPage() {
                 setAlert(true);
                 setResponse( `${data?.message}`);
             } else {
+                authenticate(data.token);
                 navigate('/vehicles')
+
             }
         } catch(e) {
            setAlert(true);
@@ -34,6 +37,9 @@ export function LoginPage() {
     });
 
 
+    const authenticate = (token) => {
+        localStorage.setItem('token', JSON.stringify(token));
+    }
     const closeAlert = () => {
         setAlert(false);
         setResponse(null);
