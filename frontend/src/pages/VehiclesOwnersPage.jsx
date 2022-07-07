@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Alert, Form, Tabber } from '../components';
 import AssignOwnerModal from '../components/modals/AssignOwnerModal';
 import CreateVehicleModal from '../components/modals/CreateVehicleModal';
+import { Pagination } from '../components/Pagination';
 import {API_URL, get} from '../utils/common.util'
 
 
@@ -43,7 +44,7 @@ export function VehicleOwnersPage() {
 
     return (
         <React.Fragment>
-            <div className='container mx-32 my-12'>
+            <div className='container lg:mx-32 md:mx-8 sm:ml-2 my-12 '>
                 <Tabber />
             
             
@@ -55,7 +56,7 @@ export function VehicleOwnersPage() {
                                 Create VehicleOwner
                                 </button>
                             </div>
-                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-12">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
@@ -105,6 +106,7 @@ export function VehicleOwnersPage() {
                                 </tbody>
                             </table>
 </div>
+                            <Pagination/>
                         </div>
                 </section>
             </div>   

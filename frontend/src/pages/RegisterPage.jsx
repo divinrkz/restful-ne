@@ -47,9 +47,9 @@ export function RegisterPage() {
 
     return (
         <React.Fragment>
-            <section className={'container h-screen flex flex-row'}>
-                <div className='w-1/5'></div>
-                <div className='w-1/5 justify-center items-center flex'>
+            <section className={'container h-screen md:flex md:flex-row'}>
+                <div className='w-1/5 xs:hidden'></div>
+                <div className='w-1/5 xs:hidden justify-center items-center flex'>
                     <img src={'/images/logo.png'} style={{width: '40rem', height: '10rem'}}  alt="Logo" />
                 </div>
 
